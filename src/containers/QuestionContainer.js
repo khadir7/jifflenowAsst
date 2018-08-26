@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { includes } from "lodash";
 import '../css/question.css';
 
 import * as actions from "../actions";
@@ -43,14 +42,11 @@ const NextButton = ({showNextBtn, handleClick}) => {
     return null;
   }
 
-return(
-  <div className="option" style={{position: 'absolute',
-    bottom: '14px',
-    right: '20px'}}
-     onClick={() => handleClick()}>
-    Next
-  </div>
-)
+  return(
+    <div className="option nextBtn" onClick={() => handleClick()}>
+      Next
+    </div>
+  )
 
 }
 const ResponseField = ({item}) => {
@@ -66,26 +62,21 @@ const ResponseField = ({item}) => {
 const ReportPage = ({report}) => {
   
 return(
-  <div style={{
-    'background': '#007C5B',
-    height: '91%',
-    padding: '20px',
-    position:'relative'
-}}>
- <table>
-   <tbody>
-    <tr>
-      <th>Q.No.</th>
-      <th>Attempted</th>
-      <th>Correct Answer</th>
-      <th>isCorrect</th>
-    </tr>
-    {report && report.map((item, key) => 
-      <ResponseField item={item} key={key}/>
-    )}
+  <div className="container">
+  <table>
+    <tbody>
+      <tr>
+        <th>Q.No.</th>
+        <th>Attempted</th>
+        <th>Correct Answer</th>
+        <th>isCorrect</th>
+      </tr>
+      {report && report.map((item, key) => 
+        <ResponseField item={item} key={key}/>
+      )}
     </tbody>
- </table>
-</div>
+  </table>
+  </div>
 )
 
 }
@@ -111,6 +102,7 @@ class QuestionContainer extends Component {
   renderNextQuestion(){
     let {qNum, answerAttempted, correctAnswer} = this.state;
     let {questions, questionResponse} = this.props;
+    
     questionResponse.push({
       qNum: qNum + 1,
       answerAttempted,
@@ -150,38 +142,29 @@ class QuestionContainer extends Component {
      }
 
     return (
-      <div style={{
-    background: '#5A1D1B',
-    padding: '30px',
-    position: 'absolute',
-    width: '92vh',
-    height: '93%'
-    }}>
+      <div className="parentContainer">
         {!showReportPage ?
-          (<div style={{
-    'background': '#007C5B',
-    height: '91%',
-    padding: '20px',
-    position:'relative'
-}}>
-        <QuestionComponent questionData={questions[qNum]} qCount={questions.length} seqNum={qNum+1} />
-        <AnswerComponent activeOption={activeOption} handleClick={this.renderNextBtn} options={questions[qNum]['options']}/>
-        <NextButton showNextBtn={showNextBtn} handleClick={this.renderNextQuestion}/>
-        </div>)
+          (<div className="container">
+            <QuestionComponent 
+                questionData={questions[qNum]}
+                qCount={questions.length} 
+                seqNum={qNum+1}
+            />
+            <AnswerComponent 
+                activeOption={activeOption}
+                handleClick={this.renderNextBtn}
+                options={questions[qNum]['options']}
+            />
+            <NextButton 
+                showNextBtn={showNextBtn}
+                handleClick={this.renderNextQuestion}
+            />
+          </div>)
         : <ReportPage report={questionResponse}/>}
       </div>
     );
   }
 }
-
-// ContentPage.PropTypes = {
-//   location: PropTypes.object.isRequired,
-//   appData: PropTypes.object.isRequired,
-//   params: PropTypes.object.isRequired,
-//   content: PropTypes.object.isRequired,
-//   standards: PropTypes.object.isRequired,
-//   subjects: PropTypes.object.isRequired
-// };
 
 const mapStateToProps = state => {
   return {

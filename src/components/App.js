@@ -1,13 +1,9 @@
 import React from "react";
 import QuestionContainer from "../containers/QuestionContainer";
+import '../css/question.css';
 
 const App = () => (
-  <div style={{
-    height: '461px',
-    marginLeft: '16px',
-    marginTop: '43px',
-    position: 'relative'
-}}>
+  <div className="appContainer">
     <QuestionContainer />
   </div>
 );

@@ -23,3 +23,27 @@ table, th, td {
     border-collapse: collapse;
     padding: 10px;
 }
+.container{
+    background: #007C5B;
+    height : 91%;
+    padding: 20px;
+    position:relative;
+}
+.parentContainer{
+    background: #5A1D1B;
+    padding: 30px;
+    position: absolute;
+    width: 92vh;
+    height: 93%;
+}
+.nextBtn{
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+}
+.appContainer{
+    height: 461px;
+    margin-left: 16px;
+    margin-top: 43px;
+    position: relative;
+}
