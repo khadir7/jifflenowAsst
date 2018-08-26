@@ -1,85 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import QuestionComponent from "../components/QuestionComponent.js";
+import AnswerComponent from "../components/AnswerComponent.js";
+import ReportPage from "../components/ReportPage.js";
+import NextButton from "../components/NextButton.js";
 import '../css/question.css';
 
 import * as actions from "../actions";
 
-const optionsMap = ['A', 'B', 'C', 'D'];
-
-const Option = ({text, index}) => {
-  return (
-    <div style={{marginBottom:'10px'}}>
-      <span>{`${optionsMap[index]} - `}</span>
-      <span>{text}</span>
-    </div>
-  )
-}
-
-const QuestionComponent = ({questionData, seqNum, qCount}) => {
-  return (
-    <div style={{paddingLeft:'25px'}}>
-      <div style={{fontSize:'12px'}}>{`JavaScript Quiz ${seqNum} out of ${qCount}`}</div>
-      <div style={{marginBottom:'20px'}}> {questionData.text} </div>
-      {questionData.options && questionData.options.map((option, key)=>
-         <Option key={key} index={key} text={option}/>
-      )}
-    </div>
-  )
-}
-
-const AnswerComponent = ({handleClick, options, activeOption}) => {
-return(
-  <div style={{position:'absolute',left:'25%',bottom:'30px'}}>
-    {optionsMap.map((item, i) => 
-      <span className={`option ${(activeOption === i) ? 'active' : ''}`} key={i} onClick={() => handleClick(i)}>{item}</span>
-    )}
-  </div>
-)
-}
-
-const NextButton = ({showNextBtn, handleClick}) => {
-  if(!showNextBtn){
-    return null;
-  }
-
-  return(
-    <div className="option nextBtn" onClick={() => handleClick()}>
-      Next
-    </div>
-  )
-
-}
-const ResponseField = ({item}) => {
-  return(
-    <tr>
-      <td>{item.qNum}</td>
-      <td>{optionsMap[item.answerAttempted]}</td>
-      <td>{optionsMap[item.correctAnswer]}</td>
-      <td>{item.isCorrect ? 'Yes' : 'No'}</td>
-    </tr>
-  )
-}
-const ReportPage = ({report}) => {
-  
-return(
-  <div className="container">
-  <table>
-    <tbody>
-      <tr>
-        <th>Q.No.</th>
-        <th>Attempted</th>
-        <th>Correct Answer</th>
-        <th>isCorrect</th>
-      </tr>
-      {report && report.map((item, key) => 
-        <ResponseField item={item} key={key}/>
-      )}
-    </tbody>
-  </table>
-  </div>
-)
-
-}
 class QuestionContainer extends Component {
   constructor(props) {
     super(props);
